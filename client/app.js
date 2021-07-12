@@ -7,12 +7,17 @@ const messageContentInput = document.getElementById('message-content');
 
 let userName;
 
+const socket = io();
+
+socket.on('message', ({ author, content }) => addMessage(author, content));
+
 const login = (event) => {
   event.preventDefault();
   if(userNameInput.value) {
     userName = userNameInput.value;
     loginForm.classList.remove('show');
     messagesSection.classList.add('show');
+    socket.emit('join', userName);
   } else {
     alert ('Please enter your login')
   }
@@ -22,8 +27,10 @@ loginForm.addEventListener('submit', login);
 
 const sendMessage = (event) => {
   event.preventDefault();
+  
   if(messageContentInput.value) {
     addMessage(userName, messageContentInput.value);
+    socket.emit('message', { author: userName, content: messageContentInput.value })
     messageContentInput.value = '';
   } else {
     alert ('Please enter your message')

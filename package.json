@@ -5,7 +5,8 @@
   "name": "websocket-learning",
   "version": "1.0.0",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "socket.io": "2.2.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.9"
