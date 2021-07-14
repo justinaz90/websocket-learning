@@ -79,8 +79,16 @@ p {
 }
 
 .message--received {
-    animation: fadeIn;
-    animation-duration: 3s;
+  animation: fadeIn;
+  animation-duration: 3s;
+}
+
+.message--chatbot {
+  font-style: italic;
+}
+
+.message--chatbot > h3 {
+  color: red;
 }
 
 .message__author {

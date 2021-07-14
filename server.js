@@ -30,6 +30,7 @@ io.on('connection', (socket) => {
     console.log('New user ' + socket.id + ' is logged ');
     users.push({ name: userName, id: socket.id });
     console.log('users', users);
+    socket.broadcast.emit('newUser', userName);
   });
 
   socket.on('message', (message) => { 
@@ -40,8 +41,12 @@ io.on('connection', (socket) => {
   
   socket.on('disconnect', () => { 
     console.log('Oh, socket ' + socket.id + ' has left') ;
-    users.splice(users.findIndex(user => user.id === socket.id), 1);
-    console.log('current users list', users);
+    const index = users.findIndex(user => user.id === socket.id);
+    if (index >= 0) {
+      socket.broadcast.emit('removeUser', users[index].name);
+      users.splice(index, 1);
+    }
+    console.log('current users list', users); 
   });
 
   console.log('I\'ve added a listener on message and disconnect events \n');
